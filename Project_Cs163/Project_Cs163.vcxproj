@@ -144,15 +144,17 @@
     <ClCompile Include="FL.cpp" />
     <ClCompile Include="Project_Cs163.cpp" />
     <ClCompile Include="search.cpp" />
+    <ClCompile Include="ViewRandomly.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVL.h" />
     <ClInclude Include="Const.h" />
-    <ClInclude Include="convert.h" />
+    <ClInclude Include="converter.h" />
     <ClInclude Include="FL.h" />
     <ClInclude Include="LL.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="search.h" />
+    <ClInclude Include="ViewRandomly.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

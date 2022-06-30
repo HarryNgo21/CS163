@@ -6,4 +6,4 @@
 #include "AVL.h"
 #include <cstring>
 
-string search_for_def(AVL tree);
+string search_for_def(AVL tree,string word,string dir);

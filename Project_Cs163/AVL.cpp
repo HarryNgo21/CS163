@@ -58,7 +58,7 @@ bool AVL::subadd(bNode*& root, string k, int x)
     return true;
 }
 
-AVL::AVL() : root(nullptr) {}
+AVL::AVL() : root(nullptr) , total_word(0) {}
 AVL::~AVL()
 {
     root->clear();
@@ -80,7 +80,10 @@ bNode* AVL::search(string x)
     }
     return temp;
 }
-
+int AVL::count(int count)
+{
+    return count;
+}
 bool AVL::load(string dir)
 {
     ifstream fin(dir, ios_base::binary);
@@ -154,4 +157,13 @@ void AVL::rrotate(bNode*& root)
     temp->right = root;
     root = temp;
     root->updateH();
+}
+void AVL::total_word1(bNode *root,int &count)
+{
+    if (root)
+    {
+        count++;
+        if (root->left) total_word1(root->left, count);
+        if (root->right) total_word1(root->right, count);
+    }
 }

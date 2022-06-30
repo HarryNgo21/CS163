@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include<string>
 #include<fstream>
@@ -6,7 +6,7 @@
 
 using namespace std;
 
-struct bNode
+struct bNode // node của AVL
 {
     string key;
     int h, d;
@@ -30,7 +30,6 @@ class AVL
 {
 private:
     bNode* root;
-
     bool subadd(bNode*&, string, int);
     void lrotate(bNode*&);
     void rrotate(bNode*&);
@@ -47,4 +46,6 @@ public:
     bool load(string);
     bool save(string);
     int Add(AVL&, string, string, string);
+    int count(int);
+    void total_word1(bNode*,int&);
 };

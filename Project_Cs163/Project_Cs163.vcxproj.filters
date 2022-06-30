@@ -30,15 +30,15 @@
     <ClCompile Include="search.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ViewRandomly.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Const.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="convert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FL.h">
@@ -51,6 +51,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="search.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="converter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewRandomly.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
