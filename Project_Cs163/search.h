@@ -4,6 +4,16 @@
 
 #endif /* search_h */
 #include "AVL.h"
+#include "LL.h"
 #include <cstring>
+#include <vector>
+#include <iostream>
+#include <ctime>
+using namespace std;
 
-string search_for_def(AVL tree,string word,string dir);
+vector<wstring> search_for_def(bNode* root, string dir);
+vector<bNode*> random_take(bNode* root, vector<int> lists);
+vector<vector<wstring>> random_word(AVL& tree, string dir, int n);
+bool random_game(vector<vector<wstring>> lists);
+bool random_def_game(vector<vector<wstring>> lists);
+void random_keywords(vector<vector<wstring>> lists);

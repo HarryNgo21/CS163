@@ -2,50 +2,42 @@
 
 #include<string>
 #include<fstream>
+#include<vector>
+
 #include "LL.h"
+#include "FL.h"
+#include "bNode.h"
 
 using namespace std;
-
-struct bNode // node của AVL
-{
-    string key;
-    int h, d;
-    bool f;
-    bNode* left, * right;
-
-    bNode(string, int);
-
-    bool add(string, int);
-
-    void clear();
-
-    int height();
-    void updateH();
-
-    void Add(string word, string dir);
-    void save(ofstream&);
-};
 
 class AVL
 {
 private:
     bNode* root;
-    bool subadd(bNode*&, string, int);
+
+    bool subadd(bNode*&, wstring, int);
+    bNode* sub(bNode*&, bool);
+    bNode* subremove(bNode*&, wstring);
     void lrotate(bNode*&);
     void rrotate(bNode*&);
 public:
     AVL();
     ~AVL();
 
-    //bool maketree(string);
-    bool insert(string, int);
-    bool remove(string k);//unnessessary
+    int maketree(string, string, string);
+    bool insert(wstring, int);
+    bool remove(wstring);//unnessessary
 
-    bNode* search(string);
+    bNode* search(wstring);
 
-    bool load(string);
-    bool save(string);
-    int Add(AVL&, string, string, string);
-    int count(int);
-    void total_word1(bNode*,int&);
+    int load(ifstream&, FL&);
+    bool save(ofstream&);
+    int Add(AVL&, wstring, wstring, wstring);
+    bNode* get_root()
+    {
+        return root;
+    }
+    int height(bNode*);
+    void num_of_words(bNode*, int&);
+    void total_word1(bNode*, int&);
 };

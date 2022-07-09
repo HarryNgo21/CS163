@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AVL.h"
 #include "LL.h"
+#include "bNode.h"
 
 class FL
 {
@@ -15,8 +15,9 @@ public:
 
     bNode*& operator[](int);
 
-    bool add(bNode*);
+    void AoR(bNode*);
     bool remove(int);
 
+    int size();
     bool save(string);
 };

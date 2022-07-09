@@ -7,15 +7,11 @@ struct Node
     Node* next;
 
     Node() : next(nullptr) {}
-    Node(T a, Node<T>* n) {
-        this->data = a;
-        next = n;
-    }
+    Node(T a, Node<T>* n) : data(a), next(n) {}
+
     void clear()
     {
-        if (this == nullptr) return;
-        next->clear();
-        next->clear();
+        if (next) next->clear();
         delete this;
     }
 };
@@ -29,7 +25,7 @@ public:
     stacks() : head(nullptr) {}
     ~stacks()
     {
-        head->clear();
+        if (head) head->clear();
     }
 
     void push(T a)
@@ -84,6 +80,16 @@ public:
     {
         tail->next = new Node<T>(a, nullptr);
         tail = tail->next;
+        if (head->next == nullptr)
+            head->next = tail;
+    }
+    Node<T>* dequeue()
+    {
+
+        Node<T>* tmp;
+        tmp = head->next;
+        head->next = tmp->next;
+        return tmp;
     }
 
     void pop()
@@ -96,6 +102,11 @@ public:
     T front()
     {
         return head->next->data;
+    }
+
+    T rear()
+    {
+        return tail->data;
     }
 
     bool empty()
