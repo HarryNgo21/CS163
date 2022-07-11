@@ -159,9 +159,44 @@
     <ClInclude Include="LL.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="RemoveFile.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="search_history.h" />
     <ClInclude Include="ViewRandomly.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="database\eng-eng\.DS_Store" />
+    <None Include="database\eng-eng\def.bin" />
+    <None Include="database\eng-eng\struct.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="database\eng-eng\1English definitions.txt" />
+    <Text Include="database\eng-eng\A.txt" />
+    <Text Include="database\eng-eng\B.txt" />
+    <Text Include="database\eng-eng\C.txt" />
+    <Text Include="database\eng-eng\D.txt" />
+    <Text Include="database\eng-eng\E.txt" />
+    <Text Include="database\eng-eng\F.txt" />
+    <Text Include="database\eng-eng\G.txt" />
+    <Text Include="database\eng-eng\H.txt" />
+    <Text Include="database\eng-eng\I.txt" />
+    <Text Include="database\eng-eng\J.txt" />
+    <Text Include="database\eng-eng\K.txt" />
+    <Text Include="database\eng-eng\L.txt" />
+    <Text Include="database\eng-eng\M.txt" />
+    <Text Include="database\eng-eng\N.txt" />
+    <Text Include="database\eng-eng\O.txt" />
+    <Text Include="database\eng-eng\P.txt" />
+    <Text Include="database\eng-eng\Q.txt" />
+    <Text Include="database\eng-eng\R.txt" />
+    <Text Include="database\eng-eng\S.txt" />
+    <Text Include="database\eng-eng\T.txt" />
+    <Text Include="database\eng-eng\U.txt" />
+    <Text Include="database\eng-eng\V.txt" />
+    <Text Include="database\eng-eng\W.txt" />
+    <Text Include="database\eng-eng\X.txt" />
+    <Text Include="database\eng-eng\Y.txt" />
+    <Text Include="database\eng-eng\Z.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

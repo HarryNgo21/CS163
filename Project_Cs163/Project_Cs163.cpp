@@ -53,6 +53,7 @@ int main()
         wcout << setw(tap) << L"[2]" << L" Search" << endl;
         wcout << setw(tap) << L"[3]" << L" View favorites" << endl;
         wcout << setw(tap) << L"[4]" << L" Quizzes" << endl;
+        wcout << setw(tap) << L"[5]" << L" Add a new word" << endl;
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
@@ -76,6 +77,9 @@ int main()
 
         case 4:
             Quizz(tree, def_dir);
+            break;
+        case 5:
+            Add(tree, def_dir);
             break;
         default://invalid input
             wcout << L"Unknow command, please try again";
@@ -125,7 +129,7 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
             def_dir = "database\\vie-eng\\def.bin";
             struct_dir = "database\\vie-eng\\struct.bin";
             ifstream fin(struct_dir, ios_base::binary);
-            if (fin.good()) return tree.load(fin, fl);
+            if (fin.is_open()) return tree.load(fin, fl);
             fin.close();
             return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir);
         }
@@ -182,7 +186,6 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
         }
         //search definition (done)
         strs = search_for_def(temp, dir);
-
         //options
         do
         {
@@ -351,4 +354,45 @@ void Quizz(AVL& tree, string dir)
             break;
         }
     } while (1);
+}
+
+void Add(AVL& tree, string &def_dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    bool again = true;
+    wstring key, def;
+    while (again)
+    {
+        wcout << L"Please input word  that you want to add to dictionary = ";
+        getline(wcin, key);
+        wcout << L"Please input definition of word that you want to add to dictionary = ";
+        getline(wcin, def);
+        int i = tree.Add(tree, key, def, def_dir);
+        switch (i)
+        {
+        case -1:
+            wcout << L"The word has already existed" << endl;
+            system("pause");
+            break;
+        case -2:
+            wcout << L"Can not open the distionary that you want to add to" << endl;
+            system("pause");
+            break;
+        default:
+            wcout << L"Add succesfully" << endl;
+            system("pause");
+            break;
+        }
+        wcout << L"Do you want to add new word once more time ? " << endl;
+        wcout << L"[0] : No" << endl;
+        wcout << L"[1] : Yes" << endl;
+        int choice;
+        wcout << L"Please input your choice = ";
+        wcin >> choice;
+        if (choice == 0)
+        {
+            again = false;
+        }
+    }
 }

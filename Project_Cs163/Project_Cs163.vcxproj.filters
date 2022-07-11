@@ -80,5 +80,102 @@
     <ClInclude Include="search_history.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="database\eng-eng\.DS_Store">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="database\eng-eng\def.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="database\eng-eng\struct.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="database\eng-eng\1English definitions.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\A.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\B.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\C.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\D.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\E.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\F.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\G.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\H.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\I.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\J.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\K.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\L.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\M.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\N.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\O.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\P.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\Q.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\R.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\S.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\T.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\U.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\V.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\W.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\X.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\Y.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="database\eng-eng\Z.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
