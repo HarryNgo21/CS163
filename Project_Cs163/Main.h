@@ -15,3 +15,5 @@ void Quizz(AVL&, string);
 void Add(AVL& tree, string& def_dir);
 
 void ViewRandomWord(AVL& tree, string def_dir);
+
+void Switch_data_set(string& struct_dir, string& def_dir);
