@@ -9,6 +9,7 @@
 #include"AVL.h"
 #include"Const.h"
 #include"search.h"
+#include"ViewRandomly.h"
 
 using namespace std;
 
@@ -54,6 +55,7 @@ int main()
         wcout << setw(tap) << L"[3]" << L" View favorites" << endl;
         wcout << setw(tap) << L"[4]" << L" Quizzes" << endl;
         wcout << setw(tap) << L"[5]" << L" Add a new word" << endl;
+        wcout << setw(tap) << L"[6]" << L" View random word and its definition" << endl;
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
@@ -80,6 +82,9 @@ int main()
             break;
         case 5:
             Add(tree, def_dir);
+            break;
+        case 6:
+            ViewRandomWord(tree, def_dir);
             break;
         default://invalid input
             wcout << L"Unknow command, please try again";
@@ -395,4 +400,23 @@ void Add(AVL& tree, string &def_dir)
             again = false;
         }
     }
+}
+void ViewRandomWord(AVL& tree, string def_dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    bNode* root = tree.get_root();
+    int serial = FindRandom(tree, root);
+    int count = 0;
+    bNode* random = nullptr;
+    ViewRandom(root, serial, count, tree, def_dir,random);
+    vector <wstring> strs;
+    strs = search_for_def(random, def_dir);
+    system("cls");
+    wcout << random->key << ':' << endl;
+    for (int j = 0; j < strs.size() - 1; j++)
+    {
+        wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
+    }
+    system("pause");
 }

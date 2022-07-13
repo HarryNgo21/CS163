@@ -13,3 +13,5 @@ void F_screen(FL&, string def_dir);
 void Quizz(AVL&, string);
 
 void Add(AVL& tree, string& def_dir);
+
+void ViewRandomWord(AVL& tree, string def_dir);

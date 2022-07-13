@@ -1,6 +1,6 @@
 #include "ViewRandomly.h"
 #include "search.h"
-int FindRandom(AVL tree, bNode* root)
+int FindRandom(AVL &tree, bNode* &root)
 {
 	srand(time(NULL));
 	int total;;
@@ -8,20 +8,21 @@ int FindRandom(AVL tree, bNode* root)
 	int number = rand() % total + 1;
 	return number;
 }
-string ViewRandom(bNode* root, int number, int count, AVL tree, string dir)
+void ViewRandom(bNode* &root, int number, int &count, AVL &tree, string dir,bNode*&random)
 {
 	if (root)
 	{
+		count++;
+		if (count > number)
+		{
+			return;
+		}
 		if (number == count)
 		{
-			string str;
-			ifstream fin(dir, ios::binary);
-			fin.seekg(root->d, ios::cur);
-			fin.read((char*)&str, 500);
-			return str;
+			random = root;
+			return;
 		}
-		if (root->left) return ViewRandom(root, number, count + 1, tree, dir);
-		if (root->right) return ViewRandom(root, number, count + 1, tree, dir);
+		if (root->left && !random) ViewRandom(root->left, number, count, tree, dir,random);
+		if (root->right && !random) ViewRandom(root->right, number, count, tree, dir,random);
 	}
-	return "";
 }
