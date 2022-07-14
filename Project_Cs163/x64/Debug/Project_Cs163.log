@@ -1,4 +1,2 @@
-﻿  Add.cpp
-C:\Users\MV\Documents\GitHub\CS163\Project_Cs163\Add.cpp(9,8): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-C:\Users\MV\Documents\GitHub\CS163\Project_Cs163\Add.cpp(9,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+﻿  Project_Cs163.cpp
   Project_Cs163.vcxproj -> C:\Users\MV\Documents\GitHub\CS163\x64\Debug\Project_Cs163.exe
