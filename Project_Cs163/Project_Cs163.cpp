@@ -57,6 +57,7 @@ int main()
         wcout << setw(tap) << L"[5]" << L" Add a new word" << endl;
         wcout << setw(tap) << L"[6]" << L" View random word and its definition" << endl;
         wcout << setw(tap) << L"[7]" << L" Switch data set" << endl;
+        wcout << setw(tap) << L"[8]" << L" Reset dictionary to its original state" << endl;
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
@@ -89,6 +90,9 @@ int main()
             break;
         case 7:
             Switch_data_set(struct_dir, def_dir);
+            break;
+        case 8:
+            ResetToOriginal(tree, struct_dir, def_dir);
             break;
         default://invalid input
             wcout << L"Unknow command, please try again";
@@ -594,4 +598,17 @@ void Switch_data_set(string& struct_dir, string& def_dir)
     }
     system("pause");
     }
+}
+void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir)
+{
+    bool Check = DeleteFile(struct_dir);
+    bool Check1 = DeleteFile(def_dir);
+    int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
+    if (size == 1 && Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
+    else wcout << L"Not successfully" << endl;
+    system("pause");
+
+    //if (Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
+    //else wcout << L"Delete not successfully" << endl;
+    //system("pause");
 }
