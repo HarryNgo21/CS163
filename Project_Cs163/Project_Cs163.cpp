@@ -1,15 +1,5 @@
-#include<iostream>
-#include<iomanip>
-#include<io.h>
-#include<fcntl.h>
-#include<string>
-#include<codecvt>
 
-#include"Main.h"
-#include"AVL.h"
-#include"Const.h"
-#include"search.h"
-#include"ViewRandomly.h"
+#include "Main.h"
 
 using namespace std;
 
