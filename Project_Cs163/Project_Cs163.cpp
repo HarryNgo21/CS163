@@ -44,21 +44,23 @@ int main()
         wcout << setw(tap) << L"[2]" << L" Search" << endl;
 
         wcout << setw(tap) << L"[3]" << L" View search history" << endl;
+        wcout << setw(tap) << L"[4]" << L" Delete search history" << endl;
 
-        wcout << setw(tap) << L"[4]" << L" View favorites" << endl;
-        wcout << setw(tap) << L"[5]" << L" Quizzes" << endl;
-        wcout << setw(tap) << L"[6]" << L" Add a new word" << endl;
+        wcout << setw(tap) << L"[5]" << L" View favorites" << endl;
+        wcout << setw(tap) << L"[6]" << L" Quizzes" << endl;
+        wcout << setw(tap) << L"[7]" << L" Add a new word" << endl;
 
-        wcout << setw(tap) << L"[7]" << L" Edit a word's definition" << endl;
-        wcout << setw(tap) << L"[8]" << L" Remove a word" << endl;
+        wcout << setw(tap) << L"[8]" << L" Edit a word's definition" << endl;
+        wcout << setw(tap) << L"[9]" << L" Remove a word" << endl;
 
-        wcout << setw(tap) << L"[9]" << L" View random word and its definition" << endl;
-        wcout << setw(tap) << L"[10]" << L" Switch data set" << endl;
-        wcout << setw(tap) << L"[11]" << L" Reset dictionary to its original state" << endl;
+        wcout << setw(tap) << L"[10]" << L" View random word and its definition" << endl;
+        wcout << setw(tap) << L"[11]" << L" Switch data set" << endl;
+        wcout << setw(tap) << L"[12]" << L" Reset dictionary to its original state" << endl;
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
+        search_history Search_History;
 
         //processing
         switch (i)
@@ -69,35 +71,41 @@ int main()
         case 1://setting
 
         case 2://change
-            S_screen(tree, fl, def_dir);
+            S_screen(tree, fl, Search_History, def_dir);
             break;
 
         case 3: //view search history
+            ViewSearchHistory(Search_History);
+            break;
 
-        case 4://favorite word
+        case 4: //delete search history
+            DeleteSearchHistory(Search_History);
+            break;
+
+        case 5://favorite word
             F_screen(fl, def_dir);
             break;
 
-        case 5:
+        case 6:
             Quizz(tree, def_dir);
             break;
-        case 6:
+        case 7:
             Add(tree, def_dir);
             break;
 
-        case 7: //edit a word definition
+        case 8: //edit a word definition
 
-        case 8: //remove a word
+        case 9: //remove a word
 
-        case 9:
-            ViewRandomWord(tree, def_dir);
-            break;
         case 10:
-
-            Switch_data_set(struct_dir, def_dir);
+            ViewRandomWord(tree, def_dir);
             break;
 
         case 11:
+            Switch_data_set(struct_dir, def_dir);
+            break;
+
+        case 12:
             ResetToOriginal(tree, struct_dir, def_dir);
             break;
 
@@ -109,9 +117,17 @@ int main()
     return 0;
 }
 
-void ViewSearchHistory() {
-
+void DeleteSearchHistory(search_history& Search_History) {
+    Search_History.Delete();
 }
+
+void ViewSearchHistory(search_history& Search_History) {
+    Search_History.Load();
+    cout << setw(tap) << "-------Your search history------" << endl;
+    Search_History.View();
+    cout << setw(tap) << "--------------------------------" << endl;
+}
+
 
 int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
 {
@@ -187,7 +203,7 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
     return 0;
 }
 
-void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
+void S_screen(AVL& tree, FL& fl, search_history& search_history, string dir) //sreen drawing add searching
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
@@ -201,6 +217,7 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
         wcout << L"Enter a word (0 to quit): ";
         getline(wcin, k);
         if (k == L"0") return;
+        search_history.Add(k);
         bNode* temp = tree.search(k);
         if (!temp)
         {
