@@ -118,14 +118,21 @@ int main()
 }
 
 void DeleteSearchHistory(search_history& Search_History) {
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
     Search_History.Delete();
+    wcout << setw(tap) << "History deleted!";
+    system("pause");
 }
 
 void ViewSearchHistory(search_history& Search_History) {
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
     Search_History.Load();
-    cout << setw(tap) << "-------Your search history------" << endl;
+    wcout << setw(tap) << L"-------Your search history------" << endl;
     Search_History.View();
-    cout << setw(tap) << "--------------------------------" << endl;
+    wcout << setw(tap) << L"--------------------------------" << endl;
+    system("pause");
 }
 
 
