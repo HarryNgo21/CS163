@@ -42,12 +42,19 @@ int main()
         wcout << setw(tap) << L"[0]" << L" Exist" << endl;
         wcout << setw(tap) << L"[1]" << L" Change language" << endl;
         wcout << setw(tap) << L"[2]" << L" Search" << endl;
-        wcout << setw(tap) << L"[3]" << L" View favorites" << endl;
-        wcout << setw(tap) << L"[4]" << L" Quizzes" << endl;
-        wcout << setw(tap) << L"[5]" << L" Add a new word" << endl;
-        wcout << setw(tap) << L"[6]" << L" View random word and its definition" << endl;
-        wcout << setw(tap) << L"[7]" << L" Switch data set" << endl;
-        wcout << setw(tap) << L"[8]" << L" Reset dictionary to its original state" << endl;
+
+        wcout << setw(tap) << L"[3]" << L" View search history" << endl;
+
+        wcout << setw(tap) << L"[4]" << L" View favorites" << endl;
+        wcout << setw(tap) << L"[5]" << L" Quizzes" << endl;
+        wcout << setw(tap) << L"[6]" << L" Add a new word" << endl;
+
+        wcout << setw(tap) << L"[7]" << L" Edit a word's definition" << endl;
+        wcout << setw(tap) << L"[8]" << L" Remove a word" << endl;
+
+        wcout << setw(tap) << L"[9]" << L" View random word and its definition" << endl;
+        wcout << setw(tap) << L"[10]" << L" Switch data set" << endl;
+        wcout << setw(tap) << L"[11]" << L" Reset dictionary to its original state" << endl;
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
@@ -65,31 +72,45 @@ int main()
             S_screen(tree, fl, def_dir);
             break;
 
-        case 3://favorite word
+        case 3: //view search history
+
+        case 4://favorite word
             F_screen(fl, def_dir);
             break;
 
-        case 4:
+        case 5:
             Quizz(tree, def_dir);
             break;
-        case 5:
+        case 6:
             Add(tree, def_dir);
             break;
-        case 6:
+
+        case 7: //edit a word definition
+
+        case 8: //remove a word
+
+        case 9:
             ViewRandomWord(tree, def_dir);
             break;
-        case 7:
+        case 10:
+
             Switch_data_set(struct_dir, def_dir);
             break;
-        case 8:
+
+        case 11:
             ResetToOriginal(tree, struct_dir, def_dir);
             break;
+
         default://invalid input
             wcout << L"Unknow command, please try again";
             break;
         }
     } while (i != 0);
     return 0;
+}
+
+void ViewSearchHistory() {
+
 }
 
 int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
