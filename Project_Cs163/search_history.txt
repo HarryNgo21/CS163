@@ -1,7 +1,1 @@
-Dog
-Cat
-dog
-catKiss
-Make
-Bye
-Home
+Man

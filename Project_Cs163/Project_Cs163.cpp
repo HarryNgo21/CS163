@@ -121,7 +121,9 @@ void DeleteSearchHistory(search_history& Search_History) {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
     Search_History.Delete();
-    wcout << setw(tap) << "History deleted!";
+    wcout << setw(tap) << L"--------------------------------" << endl;
+    wcout << setw(tap) << "History deleted!" << endl;
+    wcout << setw(tap) << L"--------------------------------" << endl;
     system("pause");
 }
 
