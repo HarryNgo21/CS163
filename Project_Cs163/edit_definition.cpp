@@ -11,7 +11,7 @@ void edit_definition(bNode* word, int def_order, wstring edited_def, vector<wstr
 	int n = definitions.size();
 	fout.write((char*)&n, sizeof(int));
 	for (int i = 0; i < n; ++i) 
-	{
+	{	
 		int length = definitions[i].length() + 1;
 		fout.write((char*)&length, sizeof(int));
 		fout.write((char*)&definitions[i][0], length * sizeof(wchar_t));

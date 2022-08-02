@@ -94,6 +94,8 @@ int main()
             break;
 
         case 8: //edit a word definition
+            
+            break;
 
         case 9: //remove a word
 
@@ -115,6 +117,93 @@ int main()
         }
     } while (i != 0);
     return 0;
+}
+
+void EditDefinition(AVL& tree, string def_dir) {
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    /*if (!word) {
+        wcout << setw(tap) << "No results!" << endl;
+
+    }
+    vector<wstring> definitions = search_for_def(word, def_dir);
+    for (int i = 0; i < definitions.size() - 1; i++)
+    {
+        wcout << setw(tap) << i + 1 << L". " << definitions[i] << endl;
+    }*/
+    vector<wstring> definitions;
+    wstring word_x;
+    int i = 1;
+    do
+    {
+        system("cls");
+        //searching
+        wcout << L"Enter a word (0 to quit): ";
+        getline(wcin, word_x);
+        if (word_x == L"0") return;
+        bNode* word = tree.search(word_x);
+        if (!word)
+        {
+            wcout << L"No result" << endl;
+            system("pause");
+            continue;
+        }
+        //search definition (done)
+        definitions = search_for_def(word, def_dir);
+        //options
+            system("cls");
+            wcout << word_x << ':' << endl;
+            for (int j = 0; j < definitions.size() - 1; j++)
+            {
+                wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
+            }
+        do 
+        {
+            int ord;
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << L"Choose the definition number you want to edit : "; wcin >> ord;
+            wstring new_def;
+            wcout << L"Enter new defintion : "; 
+            getline(wcin, new_def);
+            edit_definition(word, ord - 1, new_def, definitions, def_dir);
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << word_x << ':' << endl;
+            for (int j = 0; j < definitions.size() - 1; j++)
+            {
+                wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
+            }
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << L"your options: " << endl;
+            wcout << setw(tap) << L"[0]" << L" Back to editing." << endl;
+            wcout << setw(tap) << L"[1]";
+            if (word->f) wcout << L" Unlike" << endl;
+            else wcout << L" Like" << endl;
+            wcout << setw(tap) << L"[2]" << L" Modify" << endl;
+            wcout << L"Enter your choice: ";
+            wcin >> i;
+            wcin.ignore(1000, '\n');
+            wcout << L"----------------------------------------------------" << endl;
+            switch (i)
+            {
+            case 0:
+                break;
+
+            case 1:
+                word->f = !word->f;
+                fl.AoR(word);
+                break;
+
+            case 2://modifying functions
+
+                break;
+
+            default:
+                wcout << L"Invalid input, please try again" << endl;
+                system("pause");
+                break;
+            }
+        } while (i != 0);
+    } while (k != L"0");
 }
 
 void DeleteSearchHistory(search_history& Search_History) {

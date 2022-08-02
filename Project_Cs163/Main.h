@@ -12,6 +12,7 @@
 #include"Const.h"
 #include"search.h"
 #include "search_history.h"
+#include "edit_definition.h"
 #include"ViewRandomly.h"
 #include "RemoveFile.h"
 #include "remove_a_word.h"
