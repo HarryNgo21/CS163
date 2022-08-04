@@ -101,6 +101,7 @@ int main()
 
         case 9: //remove a word
 
+            break;
         case 10:
             ViewRandomWord(tree, def_dir);
             break;
@@ -124,15 +125,6 @@ int main()
 void EditDefinition(AVL& tree, string def_dir) {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
-    /*if (!word) {
-        wcout << setw(tap) << "No results!" << endl;
-
-    }
-    vector<wstring> definitions = search_for_def(word, def_dir);
-    for (int i = 0; i < definitions.size() - 1; i++)
-    {
-        wcout << setw(tap) << i + 1 << L". " << definitions[i] << endl;
-    }*/
     vector<wstring> definitions;
     wstring word_x;
     int i = 1;
