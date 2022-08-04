@@ -9,6 +9,8 @@ int main()
     _setmode(_fileno(stdin), _O_U16TEXT);
     string def_dir; // bin file that save the tree (based on mode of dictionary)
     string struct_dir; // bin file that save the tree (based on mode of dictionary)
+    string hash_dir;
+    c_hash key_hash;
     int i = 1, size;
     AVL tree;
     FL fl(0);
@@ -18,7 +20,7 @@ int main()
         //choose language
         if (i == 1)
         {
-            switch (size = Init_screen(tree, fl, def_dir, struct_dir))
+            switch (size = Init_screen(tree, fl, key_hash, def_dir, struct_dir, hash_dir))
             {
             case -1:
                 return 0;
@@ -66,12 +68,12 @@ int main()
         switch (i)
         {
         case 0://exist
-            return 0;
+            break;
 
         case 1://setting
 
         case 2://change
-            S_screen(tree, fl, Search_History, def_dir);
+            S_screen(tree, fl, key_hash, Search_History, def_dir);
             break;
 
         case 3: //view search history
@@ -108,7 +110,7 @@ int main()
             break;
 
         case 12:
-            ResetToOriginal(tree, struct_dir, def_dir);
+            ResetToOriginal(tree, struct_dir, def_dir, hash_dir, key_hash);
             break;
 
         default://invalid input
@@ -197,7 +199,7 @@ void DeleteSearchHistory(search_history& Search_History) {
     _setmode(_fileno(stdin), _O_U16TEXT);
     Search_History.Delete();
     wcout << setw(tap) << L"--------------------------------" << endl;
-    wcout << setw(tap) << "History deleted!" << endl;
+    wcout << setw(tap) << L"History deleted!" << endl;
     wcout << setw(tap) << L"--------------------------------" << endl;
     system("pause");
 }
@@ -213,7 +215,7 @@ void ViewSearchHistory(search_history& Search_History) {
 }
 
 
-int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
+int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& struct_dir, string& hash_dir)
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
@@ -241,10 +243,18 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
         {
             def_dir = "database\\eng-vie\\def.bin";
             struct_dir = "database\\eng-vie\\struct.bin";
+            hash_dir = "database\\eng-vie\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
-            if (fin.good()) return tree.load(fin, fl);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
             fin.close();
-            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir);
+            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
         break;
 
@@ -252,10 +262,18 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
         {
             def_dir = "database\\vie-eng\\def.bin";
             struct_dir = "database\\vie-eng\\struct.bin";
+            hash_dir = "database\\vie-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
-            if (fin.is_open()) return tree.load(fin, fl);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
             fin.close();
-            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir);
+            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
         break;
 
@@ -263,20 +281,59 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
         {
             def_dir = "database\\eng-eng\\def.bin";
             struct_dir = "database\\eng-eng\\struct.bin";
+            hash_dir = "database\\eng-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
-            if (fin.good()) return tree.load(fin, fl);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.close();
+                fin.open(hash_dir, ios_base::binary);
+                if (fin.good()) key_hash.load(fin);
+                fin.close();
+                return size;
+            }
             fin.close();
-            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
+            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
         break;
 
         case 4://init slang
-
-            break;
+        {
+            def_dir = "database\\slang\\def.bin";
+            struct_dir = "database\\slang\\struct.bin";
+            hash_dir = "database\\slang\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        break;
 
         case 5://init emotional
-
-            break;
+        {
+            def_dir = "database\\emotional\\def.bin";
+            struct_dir = "database\\emotional\\struct.bin";
+            hash_dir = "database\\emotional\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        break;
 
         default:
             wcout << L"Invaid input, please try again" << endl;
@@ -287,71 +344,188 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
     return 0;
 }
 
-void S_screen(AVL& tree, FL& fl, search_history& search_history, string dir) //sreen drawing add searching
+void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir, wstring k)
 {
-    _setmode(_fileno(stdout), _O_U16TEXT);
-    _setmode(_fileno(stdin), _O_U16TEXT);
-    vector <wstring> strs;
-    wstring k;
-    int i = 1;
+    bNode* temp = tree.search(k);
+    if (!temp)
+    {
+        wcout << L"No result" << endl;
+        system("pause");
+        return;
+    }
+    search_history.Add(k);
+    //search definition (done)
+    vector<wstring> strs = search_for_def(temp, dir);
+    //options
+    int i;
     do
     {
         system("cls");
-        //searching
+        wcout << k << ':' << endl;
+        for (int j = 0; j < strs.size() - 1; j++)
+        {
+            wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
+        }
+        wcout << L"----------------------------------------------------" << endl;
+        wcout << L"your options: " << endl;
+        wcout << setw(tap) << L"[0]" << L" Quit" << endl;
+        wcout << setw(tap) << L"[1]";
+        if (temp->f) wcout << L" Unlike" << endl;
+        else wcout << L" Like" << endl;
+        wcout << setw(tap) << L"[2]" << L" Modify" << endl;
+        wcout << L"Enter your choice: ";
+        wcin >> i;
+        wcin.ignore(1000, L'\n');
+        wcout << L"----------------------------------------------------" << endl;
+        switch (i)
+        {
+        case 0:
+            break;
+
+        case 1:
+            temp->f = !temp->f;
+            fl.AoR(temp);
+            break;
+
+        case 2://modifying functions
+        {
+            int order;
+            wstring t;
+            wcout << L"order of def: " << endl;
+            cin >> order;
+            wcout << L"edited def: " << endl;
+            getline(wcin, t);
+            edit_definition(temp, order, t, strs, dir);
+        }
+        break;
+
+        default:
+            wcout << L"Invalid input, please try again" << endl;
+            system("pause");
+            break;
+        }
+    } while (i != 0);
+}
+
+void S4D(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wstring k;
+    //searching
+    do
+    {
+        system("cls");
         wcout << L"Enter a word (0 to quit): ";
         getline(wcin, k);
         if (k == L"0") return;
-        search_history.Add(k);
-        bNode* temp = tree.search(k);
-        if (!temp)
+        S(tree, fl, key_hash, search_history, dir, k);
+    } while (k != L"0");
+}
+
+
+void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wstring k;
+    do
+    {
+        system("cls");
+        wcout << L"Enter a few keywords (0 to quit): ";
+        getline(wcin, k);
+        if (k == L"0") return;
+        vector<wstring> in = getKeyWord(k), out;
+        int is = in.size();
+        while (out.size() == 0 && --is >= 0)
         {
-            wcout << L"No result" << endl;
+            Node<keyword>* temp = key_hash.get(in[is]);
+            if (!temp || temp->data.key != in[is]) continue;
+            Node<wstring>* t = temp->data.word;
+            while (t)
+            {
+                out.push_back(t->data);
+                t = t->next;
+            }
+        }
+        while (--is >= 0 && out.size() > 0)
+        {
+            int j = 0, s = out.size();
+            Node<keyword>* temp = key_hash.get(in[is]);
+            if (!temp || temp->data.key != in[is]) continue;
+            Node<wstring>* t = temp->data.word;
+            while (j < s)
+            {
+                while (t && t->data < out[j]) t = t->next;
+                if (!t || t->data != out[j])
+                {
+                    out.erase(out.begin() + j);
+                    --s;
+                }
+                else ++j;
+            }
+        }
+        if (out.size() == 0)
+        {
+            wcout << "No result" << endl;
             system("pause");
             continue;
         }
-        //search definition (done)
-        strs = search_for_def(temp, dir);
-        //options
+        int i;
         do
         {
             system("cls");
-            wcout << k << ':' << endl;
-            for (int j = 0; j < strs.size() - 1; j++)
-            {
-                wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
-            }
-            wcout << L"----------------------------------------------------" << endl;
-            wcout << L"your options: " << endl;
-            wcout << setw(tap) << L"[0]" << L" Back to searching" << endl;
-            wcout << setw(tap) << L"[1]";
-            if (temp->f) wcout << L" Unlike" << endl;
-            else wcout << L" Like" << endl;
-            wcout << setw(tap) << L"[2]" << L" Modify" << endl;
-            wcout << L"Enter your choice: ";
+            wcout << "Relevant words to " << L'\"' << k << L"\": " << endl;
+            for (int j = 0; j < out.size(); ++j)
+                wcout << setw(tap) << L'[' << j + 1 << L"] " << out[j] << endl;
+            wcout << "Choose a word to see its definition or 0 to back to searching: ";
             wcin >> i;
-            wcin.ignore(1000, '\n');
-            wcout << L"----------------------------------------------------" << endl;
-            switch (i)
+            wcin.ignore(1000, L'\n');
+            if (i < 0 || i > out.size())
             {
-            case 0:
-                break;
-
-            case 1:
-                temp->f = !temp->f;
-                fl.AoR(temp);
-                break;
-
-            case 2://modifying functions
-
-                break;
-
-            default:
-                wcout << L"Invalid input, please try again" << endl;
+                wcout << "Invalid input, please try again" << endl;
                 system("pause");
-                break;
             }
-        } while (i != 0);
+            if (i == 0) break;
+            S(tree, fl, key_hash, search_history, dir, out[i - 1]);
+        } while (i);
     } while (k != L"0");
+}
+
+void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir) //sreen drawing add searching
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    int i;
+    do
+    {
+        system("cls");
+        //choose mode
+        wcout << L"Choose searching mode: " << endl;
+        wcout << setw(tap) << L"[0]" << L" Quit" << endl;
+        wcout << setw(tap) << L"[1]" << L" Search for definition" << endl;
+        wcout << setw(tap) << L"[2]" << L" Search for word" << endl;
+        wcin >> i;
+        wcin.ignore(1000, L'\n');
+        switch (i)
+        {
+        case 0:
+            break;
+
+        case 1:
+            S4D(tree, fl, key_hash, search_history, dir);
+            break;
+
+        case 2:
+            S4W(tree, fl, key_hash, search_history, dir);
+            break;
+
+        default:
+            wcout << L"Invalid input, please try again" << endl;
+            system("pause");
+            break;
+        }
+    } while (i);
 }
 
 
@@ -433,7 +607,7 @@ void Quizz(AVL& tree, string dir)
         {
             wcout << L"your choice: ";
             wcin >> option;
-            wcin.ignore(1000, '\n');
+            wcin.ignore(1000, L'\n');
         } while (option != 2 && option != 1 && option != 0);
         if (option == 0)
             return;
@@ -481,7 +655,7 @@ void Quizz(AVL& tree, string dir)
     } while (1);
 }
 
-void Add(AVL& tree, string &def_dir)
+void Add(AVL& tree, string& def_dir)
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
@@ -515,6 +689,7 @@ void Add(AVL& tree, string &def_dir)
         int choice;
         wcout << L"Please input your choice = ";
         wcin >> choice;
+        wcin.ignore(1000, L'\n');
         if (choice == 0)
         {
             again = false;
@@ -529,7 +704,7 @@ void ViewRandomWord(AVL& tree, string def_dir)
     int serial = FindRandom(tree, root);
     int count = 0;
     bNode* random = nullptr;
-    ViewRandom(root, serial, count, tree, def_dir,random);
+    ViewRandom(root, serial, count, tree, def_dir, random);
     vector <wstring> strs;
     strs = search_for_def(random, def_dir);
     system("cls");
@@ -553,7 +728,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-eng mode" << endl;
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -566,14 +741,14 @@ void Switch_data_set(string& struct_dir, string& def_dir)
             struct_dir = "database\\eng-eng\\struct.bin";
             wcout << L"Change succesfully" << endl;
             break;
-        //case 3:
-        //    def_dir = "";
-        //    struct_dir = "";
-        //    break;
-        //case 4:
-        //    def_dir = "";
-        //    struct_dir = "";
-        //    break;
+            //case 3:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
         default:
             wcout << L"Goodbye" << endl;
             break;
@@ -587,7 +762,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-eng mode" << endl;
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -613,7 +788,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-vie mode" << endl;
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -647,7 +822,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-vie mode" << endl;
         wcout << L"[3].Change to eng-eng mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -677,45 +852,45 @@ void Switch_data_set(string& struct_dir, string& def_dir)
     }
     else
     {
-    int choice;
-    wcout << L"[1].Change to vie-eng mode" << endl;
-    wcout << L"[2].Change to eng-vie mode" << endl;
-    wcout << L"[3].Change to eng-eng mode" << endl;
-    wcout << L"[4].Change to slang mode" << endl;
-    wcout << L"Please input your choice = "; wcin >> choice;
-    switch (choice)
-    {
-    case 1:
-        def_dir = "database\\vie-eng\\def.bin";
-        struct_dir = "database\\vie-eng\\struct.bin";
-        wcout << L"Change succesfully" << endl;
-        break;
-    case 2:
-        def_dir = "database\\eng-vie\\def.bin";
-        struct_dir = "database\\eng-vie\\struct.bin";
-        wcout << L"Change succesfully" << endl;
-        break;
-    case 3:
-        def_dir = "database\\eng-eng\\def.bin";
-        struct_dir = "database\\eng-eng\\struct.bin";
-        wcout << L"Change succesfully" << endl;
-        break;
-        //case 4:
-        //    def_dir = "";
-        //    struct_dir = "";
-        //    break;
-    default:
-        wcout << L"Goodbye" << endl;
-        break;
-    }
-    system("pause");
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to eng-eng mode" << endl;
+        wcout << L"[4].Change to slang mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 3:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
     }
 }
-void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir)
+void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& hash_dir, c_hash& key_hash)
 {
     bool Check = DeleteFile(struct_dir);
     bool Check1 = DeleteFile(def_dir);
-    int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
+    int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
     if (size == 1 && Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
     else wcout << L"Not successfully" << endl;
     system("pause");
