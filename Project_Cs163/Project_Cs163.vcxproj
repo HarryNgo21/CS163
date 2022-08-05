@@ -143,6 +143,7 @@
     <ClCompile Include="AVL.cpp" />
     <ClCompile Include="converter.cpp" />
     <ClCompile Include="FL.cpp" />
+    <ClCompile Include="Keyword.cpp" />
     <ClCompile Include="Project_Cs163.cpp" />
     <ClCompile Include="RemoveFile.cpp" />
     <ClCompile Include="search.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="convert.h" />
     <ClInclude Include="converter.h" />
     <ClInclude Include="FL.h" />
+    <ClInclude Include="Keyword.h" />
     <ClInclude Include="LL.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="RemoveFile.h" />
