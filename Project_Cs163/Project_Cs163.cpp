@@ -183,6 +183,7 @@ void EditDefinition(AVL& tree, string def_dir) {
                 wcin >> check;
             } while (check != 'y' && check != 'n');
 
+            //change the definition
             if (check == 'y')  {
                 edit_definition(word, ord - 1, new_def, definitions, def_dir);
                 wcout << setw(tap) << L"Definition changed ! " << endl;
